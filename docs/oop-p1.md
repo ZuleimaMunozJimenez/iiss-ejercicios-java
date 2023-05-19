@@ -170,6 +170,8 @@ a) ¿Es correcto el uso de herencia en la implementación de las clases `Cat` y 
 
 
 Si es correcto el uso de la herencia en este caso, porque satisface el principio de sustitución de Liskov. Los beneficionas que se obtienen son:
+
+
     - Reutilización de código.
     - Polimorfismo.
     - Extensibilidad.
