@@ -220,16 +220,16 @@ a) ¿Existe algún tipo de problema en la implementación anterior de los que se
 
 Si existen algunos problemas de la lista. Son los siguientes:
 
-    - **Funciones con nombre que no especifican claramente su objetivo**: Los nombres de la función `getUsers()` no es lo suficientemente descriptivo para entender su propósito sin leer su implementación.
-    - **Rutinas demasiado largas**: `getUsers()` realiza varias operaciones en secuencia, lo que la hace difícil de entender y mantener a medida que crece en complejidad.
-    - **Funciones con demasiada responsabilidad**: `getUsers()` realiza tanto la clasificación de usuarios por puntos como la capitalización de los nombres de los usuarios.
-    - **Variables globales**: El map `usersWithPoints` se declara como una variable estática y privada en la clase.
+- **Funciones con nombre que no especifican claramente su objetivo**: Los nombres de la función `getUsers()` no es lo suficientemente descriptivo para entender su propósito sin leer su implementación.
+- **Rutinas demasiado largas**: `getUsers()` realiza varias operaciones en secuencia, lo que la hace difícil de entender y mantener a medida que crece en complejidad.
+- **Funciones con demasiada responsabilidad**: `getUsers()` realiza tanto la clasificación de usuarios por puntos como la capitalización de los nombres de los usuarios.
+- **Variables globales**: El map `usersWithPoints` se declara como una variable estática y privada en la clase.
 
 Si es necesario aplicar refactoring ya que los problemas podrían generar las siguientes dificultades en el futuro:
 
-    * Legibilidad y mantenibilidad reducidas: El código se volverá más difícil de entender y modificar a medida que crezca en tamaño y complejidad.
-    * Mayor riesgo de introducir errores: La falta de nombres descriptivos y funciones con responsabilidades claras dificulta la detección de errores y el seguimiento de los problemas en el código.
-    * Dificultad para realizar cambios: Los cambios futuros pueden requerir modificaciones en múltiples partes del código debido a la falta de modularidad y responsabilidad única.
+* Legibilidad y mantenibilidad reducidas: El código se volverá más difícil de entender y modificar a medida que crezca en tamaño y complejidad.
+* Mayor riesgo de introducir errores: La falta de nombres descriptivos y funciones con responsabilidades claras dificulta la detección de errores y el seguimiento de los problemas en el código.
+* Dificultad para realizar cambios: Los cambios futuros pueden requerir modificaciones en múltiples partes del código debido a la falta de modularidad y responsabilidad única.
 
 
 Por tanto, aplicar refactoring puede mejorar la calidad del código, facilitar su comprensión, reducir el riesgo de errores y aumentar la mantenibilidad a largo plazo.
@@ -286,10 +286,10 @@ public class GroupOfUsers {
 
 Las mejoras implementadas en este código son:
 
-    1. Ya no está la variable local, se ha creado un método para inicializarlo aportando claridad y mantenibilidad al código.
-    2. Se ha cambiado el nombre al método `getUsers()`, dejando más claro para que es el método.
-    3. He separado en métodos privados `sortUsersByPoints()` y `capitalizeUserNames()` lo que divide las responsabilidades y mejora la legibilidad y mantenibilidad del código.
-    4. He cambiado los búcles `forEach` por bucles `for` en los métodos mencionados en el apartado 3, para así mantener la compatibilidad de versiones.
+1. Ya no está la variable local, se ha creado un método para inicializarlo aportando claridad y mantenibilidad al código.
+2. Se ha cambiado el nombre al método `getUsers()`, dejando más claro para que es el método.
+3. He separado en métodos privados `sortUsersByPoints()` y `capitalizeUserNames()` lo que divide las responsabilidades y mejora la legibilidad y mantenibilidad del código.
+4. He cambiado los búcles `forEach` por bucles `for` en los métodos mencionados en el apartado 3, para así mantener la compatibilidad de versiones.
 
 
 ### Ejercicio 2
@@ -459,10 +459,10 @@ public class GroupOfUsers {
 
 Los cambios realizados son:
 
-    1. Se crearon métodos separados `createGroup1()`, `createGroup2()`, `createGroup3()` para inicializar los grupos de usuarios y sus puntos para así mejorar la legibilidad del código y hacerlo más modular.
-    2. Se creó un método `sortUsersByPoints()` para ordenar los usuarios según sus puntos y así evitar la duplicación de código, además mejora la reutilización.
-    3. Se creó un método `capitalizeUserNames()` para capitalizar los nombres de usuario y así separar la responsabilidad y mejorar la legibilidad.
-    4. Se utilizaron tipos de datos más genéricos en lugar de tipos específicos para las listas, lo que aporta mayor flexibilidad.
+1. Se crearon métodos separados `createGroup1()`, `createGroup2()`, `createGroup3()` para inicializar los grupos de usuarios y sus puntos para así mejorar la legibilidad del código y hacerlo más modular.
+2. Se creó un método `sortUsersByPoints()` para ordenar los usuarios según sus puntos y así evitar la duplicación de código, además mejora la reutilización.
+3. Se creó un método `capitalizeUserNames()` para capitalizar los nombres de usuario y así separar la responsabilidad y mejorar la legibilidad.
+4. Se utilizaron tipos de datos más genéricos en lugar de tipos específicos para las listas, lo que aporta mayor flexibilidad.
 
 
 ## Referencias
