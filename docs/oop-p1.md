@@ -47,7 +47,44 @@ public class ElementsSet<E> extends HashSet<E> {
 
 a) ¿Es el uso de la herencia adecuado para la implementación de la clase `ElementsSet`? ¿Qué salida muestra la función `System.out.println` al invocar el método `getNumberOfAddedElements`, 3 o 6?
 
+
+Creo que no es un uso adeacuado de la herencia debido a que en la implementación de la herencia en este ejemplo viola el principio de sustitución de Liskov. ya que intenta usarla como una forma de estructurar el programa. Al agregar funcionalidad adicional a los métodos `add` y `addAll` se está alterando el comportamiento de estos métodos en la clase `HashSet`.
+
+
+La salida muestra el valor 3.
+
+
 b) En el caso de que haya algún problema en la implementación anterior, proponga una solución alternativa usando composición/delegación que resuelva el problema.
+
+
+Pienso que lo ideal sería usar composición, quedando el código de la siguiente forma:
+
+```java
+public class ElementsSet<E> {
+    private HashSet<E> set;
+    private int numberOfAddedElements;
+
+    public ElementsSet() {
+        set = new HashSet<>();
+        numberOfAddedElements = 0;
+    }
+
+    public boolean add(E element) {
+        numberOfAddedElements++;
+        return set.add(element);
+    }
+
+    public boolean addAll(Collection<? extends E> elements) {
+        numberOfAddedElements += elements.size();
+        return set.addAll(elements);
+    }
+
+    public int getNumberOfAddedElements() {
+        return numberOfAddedElements;
+    }
+}
+```
+
 
 ### Ejercicio 2
 
@@ -131,4 +168,16 @@ public class Dog extends Animal {
 
 a) ¿Es correcto el uso de herencia en la implementación de las clases `Cat` y `Dog`? ¿Qué beneficios se obtienen?
 
+
+Si es correcto el uso de la herencia en este caso, porque satisface el principio de sustitución de Liskov. Los beneficionas que se obtienen son:
+    - Reutilización de código.
+    - Polimorfismo.
+    - Extensibilidad.
+    - Organización y estructura.
+
+
 b) En el caso de que el uso de la herencia no sea correcto, proponga una solución alternativa. ¿Cuáles son los beneficios de la solución propuesta frente a la original?
+
+
+Lo considero correcto, por lo que no propongo ninguna solución alternativa.
+
