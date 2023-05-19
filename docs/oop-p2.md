@@ -217,7 +217,80 @@ En la siguiente lista se incluyen 10 posibles problemas que pueden encontrarse e
 
 a) ¿Existe algún tipo de problema en la implementación anterior de los que se incluye en la lista anterior? ¿Es necesario aplicar refactoring en este caso? En el caso de que existan problemas, indique cuáles son y qué tipos de problemas piensa que generarían en el futuro si no se aplica el refactoring ahora.
 
+
+Si existen algunos problemas de la lista. Son los siguientes:
+
+    - **Funciones con nombre que no especifican claramente su objetivo**: Los nombres de la función `getUsers()` no es lo suficientemente descriptivo para entender su propósito sin leer su implementación.
+    - **Rutinas demasiado largas**: `getUsers()` realiza varias operaciones en secuencia, lo que la hace difícil de entender y mantener a medida que crece en complejidad.
+    - **Funciones con demasiada responsabilidad**: `getUsers()` realiza tanto la clasificación de usuarios por puntos como la capitalización de los nombres de los usuarios.
+    - **Variables globales**: El map `usersWithPoints` se declara como una variable estática y privada en la clase.
+
+Si es necesario aplicar refactoring ya que los problemas podrían generar las siguientes dificultades en el futuro:
+
+    * Legibilidad y mantenibilidad reducidas: El código se volverá más difícil de entender y modificar a medida que crezca en tamaño y complejidad.
+    * Mayor riesgo de introducir errores: La falta de nombres descriptivos y funciones con responsabilidades claras dificulta la detección de errores y el seguimiento de los problemas en el código.
+    * Dificultad para realizar cambios: Los cambios futuros pueden requerir modificaciones en múltiples partes del código debido a la falta de modularidad y responsabilidad única.
+
+
+Por tanto, aplicar refactoring puede mejorar la calidad del código, facilitar su comprensión, reducir el riesgo de errores y aumentar la mantenibilidad a largo plazo.
+
+
 b) En el caso de que la implementación necesite la aplicación de refactoring, realice los cambios oportunos e indique las mejoras que aporta su implementación respecto a la original.
+
+Una aplicación de refactoring solucionando los problemas anteriores sería la siguiente:
+
+```java
+public class GroupOfUsers {
+ 
+    private Map<String, Integer> usersWithPoints;
+    
+    public GroupOfUsers() {
+        usersWithPoints = new HashMap<>();
+        initializeUsers();
+    }
+    
+    private void initializeUsers() {
+        usersWithPoints.put("User1", 800);
+        usersWithPoints.put("User2", 550);
+        usersWithPoints.put("User3", 20);
+        usersWithPoints.put("User4", 300);
+    }
+    
+    public List<String> getUsersInDescendingOrder() {
+        List<String> users = sortUsersByPoints();
+        return capitalizeUserNames(users);
+    }
+    
+    private List<String> sortUsersByPoints() {
+        List<Map.Entry<String, Integer>> entries = new ArrayList<>(usersWithPoints.entrySet());
+        entries.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
+        
+        List<String> sortedUsers = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : entries) {
+            sortedUsers.add(entry.getKey());
+        }
+        
+        return sortedUsers;
+    }
+    
+    private List<String> capitalizeUserNames(List<String> users) {
+        List<String> capitalizedUsers = new ArrayList<>();
+        for (String user : users) {
+            capitalizedUsers.add(user.toUpperCase());
+        }
+        
+        return capitalizedUsers;
+    }
+}
+```
+
+Las mejoras implementadas en este código son:
+
+    1. Ya no está la variable local, se ha creado un método para inicializarlo aportando claridad y mantenibilidad al código.
+    2. Se ha cambiado el nombre al método `getUsers()`, dejando más claro para que es el método.
+    3. He separado en métodos privados `sortUsersByPoints()` y `capitalizeUserNames()` lo que divide las responsabilidades y mejora la legibilidad y mantenibilidad del código.
+    4. He cambiado los búcles `forEach` por bucles `for` en los métodos mencionados en el apartado 3, para así mantener la compatibilidad de versiones.
+
 
 ### Ejercicio 2
 
@@ -310,7 +383,86 @@ Responda a las siguientes cuestiones, teniendo en cuenta la lista de los 10 posi
 
 a) El software del ejercicio anterior ha evolucionado añadiendo nueva funcionalidad en su implementación. ¿Existe algún tipo de problema en esta versión de la implementación de los que se incluyen en la lista? ¿Es necesario aplicar refactoring en este caso? En el caso de que existan problemas, indique cuáles son y qué tipos de problemas piensa que generarían en el futuro si no se aplica el refactoring ahora.
 
+
+Presenta los mismo problemas que el ejercicio anterior, con la diferencia de que aquí hay mucho más código, porque realiza lo mismo varías veces. Esto muestra que los problemas futuros escritos en el apartado anterior son ciertos y se dan en este código.
+
+
 b) En el caso de que la implementación necesite la aplicación de refactoring, realice los cambios oportunos e indique las mejoras que aporta su implementación respecto a la original.
+
+
+Mi aplicación del refactoring sería:
+
+```java
+import java.util.*;
+
+public class GroupOfUsers {
+    
+    private static Map<String, Integer> usersWithPoints_Group1 = createGroup1();
+    private static Map<String, Integer> usersWithPoints_Group2 = createGroup2();
+    private static Map<String, Integer> usersWithPoints_Group3 = createGroup3();
+    
+    private static Map<String, Integer> createGroup1() {
+        Map<String, Integer> group1 = new HashMap<>();
+        group1.put("User1", 800);
+        group1.put("User2", 550);
+        group1.put("User3", 20);
+        group1.put("User4", 300);
+        return group1;
+    }
+    
+    private static Map<String, Integer> createGroup2() {
+        Map<String, Integer> group2 = new HashMap<>();
+        group2.put("User1", 10);
+        group2.put("User2", 990);
+        group2.put("User3", 760);
+        group2.put("User4", 230);
+        return group2;
+    }
+    
+    private static Map<String, Integer> createGroup3() {
+        Map<String, Integer> group3 = new HashMap<>();
+        group3.put("User1", 1000);
+        group3.put("User2", 200);
+        group3.put("User3", 5);
+        group3.put("User4", 780);
+        return group3;
+    }
+    
+    public List<List<String>> getUsers() {
+        List<Map.Entry<String, Integer>> sortedGroup1 = sortUsersByPoints(usersWithPoints_Group1);
+        List<Map.Entry<String, Integer>> sortedGroup2 = sortUsersByPoints(usersWithPoints_Group2);
+        List<Map.Entry<String, Integer>> sortedGroup3 = sortUsersByPoints(usersWithPoints_Group3);
+        
+        List<List<String>> users = new ArrayList<>();
+        users.add(capitalizeUserNames(sortedGroup1));
+        users.add(capitalizeUserNames(sortedGroup2));
+        users.add(capitalizeUserNames(sortedGroup3));
+        
+        return users;
+    }
+    
+    private List<Map.Entry<String, Integer>> sortUsersByPoints(Map<String, Integer> usersWithPoints) {
+        List<Map.Entry<String, Integer>> sortedUsers = new ArrayList<>(usersWithPoints.entrySet());
+        sortedUsers.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
+        return sortedUsers;
+    }
+    
+    private List<String> capitalizeUserNames(List<Map.Entry<String, Integer>> users) {
+        List<String> capitalizedUsers = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : users) {
+            capitalizedUsers.add(entry.getKey().toUpperCase());
+        }
+        return capitalizedUsers;
+    }
+}
+```
+
+Los cambios realizados son:
+    1. Se crearon métodos separados `createGroup1()`, `createGroup2()`, `createGroup3()` para inicializar los grupos de usuarios y sus puntos para así mejorar la legibilidad del código y hacerlo más modular.
+    2. Se creó un método `sortUsersByPoints()` para ordenar los usuarios según sus puntos y así evitar la duplicación de código, además mejora la reutilización.
+    3. Se creó un método `capitalizeUserNames()` para capitalizar los nombres de usuario y así separar la responsabilidad y mejorar la legibilidad.
+    4. Se utilizaron tipos de datos más genéricos en lugar de tipos específicos para las listas, lo que aporta mayor flexibilidad.
+
 
 ## Referencias
 
