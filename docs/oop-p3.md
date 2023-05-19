@@ -95,10 +95,29 @@ public class Main {
 #### Preguntas propuestas
 
 1. ¿Se realiza inyección de dependencias entre las clases anteriores? Si es así, identifique la clase inyectora, el servicio y el cliente.
+
+
+Si se realiza inyección de dependencias. Quedando identificadas de la siguiente forma:
+
+- Clase inyectora: La clase `Main` porque se encarga de crear las instancias de las dependencias y proporcionarlas a las clases que las necesiten.
+- Servicio: Las clases `DBAccessA` y `DBAccessB` ya que implementan la interfaz `DBAccess` y se usan para acceder a la base de datos.
+- Cliente: La clase `DBClient` porque depende de una instancia de `DBAccess` para realizar operaciones en la base de datos.
+
+
 2. En el caso de que exista inyección de dependencias, además indique:
 
 - El método de inyección que se realiza (constructor, propiedad o método).
+
+
+Se realiza a través del constructor de la clase `DBClient` en el que se le pasa una instancia de `DBAccess` como parámetro.
+
+
 - La/s línea/s donde se realiza la inyección de dependencias.
+
+
+Se realiza en:
+
+`public DBClient(DBAccess dbAccess)`
 
 
 ### Ejercicio 2
