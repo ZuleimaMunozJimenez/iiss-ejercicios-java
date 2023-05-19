@@ -458,6 +458,7 @@ public class GroupOfUsers {
 ```
 
 Los cambios realizados son:
+
     1. Se crearon métodos separados `createGroup1()`, `createGroup2()`, `createGroup3()` para inicializar los grupos de usuarios y sus puntos para así mejorar la legibilidad del código y hacerlo más modular.
     2. Se creó un método `sortUsersByPoints()` para ordenar los usuarios según sus puntos y así evitar la duplicación de código, además mejora la reutilización.
     3. Se creó un método `capitalizeUserNames()` para capitalizar los nombres de usuario y así separar la responsabilidad y mejorar la legibilidad.
